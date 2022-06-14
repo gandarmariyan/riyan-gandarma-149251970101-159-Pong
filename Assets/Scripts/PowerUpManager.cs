@@ -7,6 +7,7 @@ public class PowerUpManager : MonoBehaviour
     public Transform spawnArea;
     public int maxPowerUpAmount;
     public int spawnInterval;
+    public int despawnInterval;
     public Vector2 powerUpAreaMin;
     public Vector2 powerUpAreaMax;
     public List<GameObject> powerUpTemplateList;
@@ -14,21 +15,30 @@ public class PowerUpManager : MonoBehaviour
     private List<GameObject> powerUpList;
 
     private float timer;
+    private float timer2;
 
     private void Start()
     {
         powerUpList = new List<GameObject>();
         timer = 0;
+        timer2 = 0;
     }
 
     private void Update()
     {
         timer += Time.deltaTime;
+        timer2 += Time.deltaTime;
 
         if (timer > spawnInterval)
         {
             GenerateRandomPowerUp();
             timer -= spawnInterval;
+        }
+
+        if (timer2 > despawnInterval)
+        {
+            RemoveAllPowerUp();
+            timer2 -= despawnInterval;
         }
     }
 
